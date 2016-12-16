@@ -1,0 +1,27 @@
+
+<div class="W8_bodywrap">
+	<div class="W8_main">
+        <div class="W8_header clearfix">
+            <div class="W8_logo clearfix">
+                <h1 title="提示"><em></em><a href="/">提示</a></h1>
+            </div>
+        </div>
+    	<div class="W8_main_bg clearfix">
+            <div class="W8_1col">
+                <div class="W8_wrap clearfix">
+                    <dl class="index_err">
+                        <dt><p class="bg_err4"></p></dt>
+                        <dd>
+                            <div class="upheight">
+                                <p class="tit"><?= $msg ?></p>
+                            </div>
+                            <?php if (is_numeric($error_page_time)) : ?><p class="link"><span id="pl_content_errorPage" class="W_spetxt"><?= $error_page_time ?></span>秒之后返回<a href="/">话题首页</a></p><?php endif; ?>
+                        </dd>
+                    </dl>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div style="display:none">code:<?= $code ?></div>

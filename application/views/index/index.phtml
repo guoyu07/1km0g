@@ -1,0 +1,103 @@
+<!DOCTYPE html> 
+<html>
+<head>
+	<title>附近的公共自行车</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />  
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />  
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="http://libs.useso.com/js/jquery-mobile/1.4.2/jquery.mobile.min.css" />
+	<script type="text/javascript" src="http://libs.useso.com/js/jquery/2.1.1/jquery.min.js"></script>
+	<script type="text/javascript" src="http://libs.useso.com/js/jquery-mobile/1.4.2/jquery.mobile.min.js"></script>
+    <script type="text/javascript" src="http://api.map.baidu.com/api?type=quick&ak=<?= $js_config['baidu_ak'] ?>&v=1.0"></script>
+</head>
+
+<body>
+<div data-role="page">
+
+	<header data-role="header" data-position="fixed">
+		<h1>附近的公共自行车</h1>
+	</header>
+
+	<div role="main" class="ui-content">
+        <div id="l-map" style="height:400px"></div>  
+	</div>
+    <?php /*
+	<footer data-role="footer">
+		<h4>Page Footer</h4>
+	</footer>
+    */?>
+</div>
+
+
+
+
+
+</body>
+</html>
+<script type="text/javascript">
+var $CONF = <?= json_encode($js_config) ?>;
+</script>
+
+
+<script type="text/javascript">
+
+
+//定位失败报错回调
+function showLocationError(error) {
+
+    var $message = "获取位置异常";
+    switch(error.code)
+    {
+        case error.PERMISSION_DENIED:
+            $message = "User denied the request for Geolocation."
+            break;
+        case error.POSITION_UNAVAILABLE:
+            $message = "Location information is unavailable."
+            break;
+        case error.TIMEOUT:
+            $message = "The request to get user location timed out."
+            break;
+        case error.UNKNOWN_ERROR:
+            $message = "An unknown error occurred."
+            break;
+    }
+    alert($message);
+
+}
+
+//显示位置回调
+function showPosition(position) {
+    var $ajax_geo_data = {
+        "coords" : position.coords.longitude + "," + position.coords.latitude,
+        "from" : "1",
+        "to" : "5",
+        "ak" : $CONF.baidu_ak
+    };
+    $.get("http://api.map.baidu.com/geoconv/v1/", $ajax_geo_data, function(o) {
+    
+        //@todo 判断纠偏失败的情况
+        var $geo= o.result[0];
+        
+
+        //初始化地图
+        var $map = new BMap.Map("l-map");
+        $map.centerAndZoom(new BMap.Point($geo.x, $geo.y), 14);
+        $map.addControl(new BMap.ZoomControl()); //添加地图缩放控件
+        
+        //添加当前位置
+        var $marker = new BMap.Marker(new BMap.Point($geo.x, $geo.y));   
+        $map.addOverlay($marker);
+    }, "jsonp");
+}
+
+//获取位置
+if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(showPosition);
+} else {
+    alert("获取位置失败");
+}
+
+
+
+
+</script>
