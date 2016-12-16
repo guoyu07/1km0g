@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="zh-cn">
+<head>
+<meta charset="UTF-8">
+<title>金利达微信图片数据</title>
+</head>
+
+<body>
+<table border="1">
+    <thread>
+        <tr>
+            <th>ID</th>
+            <th>图片</th>
+            <th>时间</th>
+        </tr>
+    </thread>
+    
+    <tbody>
+        <?php foreach($result as $value) : ?>
+        <tr>
+            <td><?= $value['id'] ?></td>
+            <td><a href="<?= $value['pic_url'] ?>" target="_blank"><img style="max-width:100px;max-height:100px" src="<?= $value['pic_url'] ?>" /></a></td>
+            <td><?= date('Y-m-d H:i:s', $value['create_time']) ?></td>
+        </tr>
+        <?php endforeach; ?>
+    </tbody>
+    
+</table>
+</body>
+</html>
