@@ -15,6 +15,9 @@ class BikeModel {
      * @return array
      */
     static public function showBikeData() {
+        //Azure暂不支持缓存
+        return self::_showBikeOriData();
+        
         $cache_time = 10;
         $data = Comm\Kv::get('bikedata');
         if(!is_array($data) || (NOW > $data['expire'] && Comm\Mc::getLock('bikedata', $cache_time)) ) {
@@ -40,8 +43,14 @@ class BikeModel {
      */
     static public function _showBikeOriData() {
         $url = 'http://www.1km0g.com/api/ibikeJSInterface.asp';
-        $sae_fetch_url = new SaeFetchurl();
-        $data = $sae_fetch_url->fetch($url);
+        $ch = curl_init($url);
+        curl_setopt_array($ch, array(
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_CONNECTTIMEOUT => 5,
+            CURLOPT_TIMEOUT        => 5,
+        ));
+        $data = curl_exec($ch);
+        curl_close($ch);
 
         $result = array();
         if(preg_match('/{.*}/s', $data, $regex_data)) {

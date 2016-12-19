@@ -18,6 +18,9 @@ class Debug {
      * @return void
      */
     static public function log($msg, $file = 'debug.txt', $domain = 'debug') {
+        
+        return false;
+        
         $content = $msg . "\r\n";
         $content .= 'TIME:' . date("Y-m-d H:i:s\r\n");
         $content .= "GET:" . print_r($_GET, true) . "\r\n";

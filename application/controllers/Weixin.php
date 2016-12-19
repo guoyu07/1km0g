@@ -96,7 +96,7 @@ class WeixinController extends Yaf_Controller_Abstract {
      * @return string
      */
     protected function _showMapUrl($location_x, $location_y){
-        return 'http://' . filter_input(INPUT_SERVER, 'HTTP_APPNAME') . ".sinaapp.com/index.php/map/near?lat={$location_x}&lng={$location_y}&from=weixin";
+        return 'http://' . filter_input(INPUT_SERVER, 'HTTP_HOST') . "/index.php/map/near?lat={$location_x}&lng={$location_y}&from=weixin";
     }
 
     /**
