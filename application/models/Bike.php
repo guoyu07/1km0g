@@ -10,8 +10,6 @@ class BikeModel {
     /**
      * 获取自行车数据(在KV中缓存10秒钟)
      *
-     * @todo Cache
-     *
      * @return array
      */
     static public function showBikeData() {
