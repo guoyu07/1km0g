@@ -161,6 +161,9 @@ class WeixinController extends Yaf_Controller_Abstract {
      */
     protected function _text(\Dataobject\Weixin\Requestmsg\Text $request) {
         $content = trim($request->Content);
+        
+        //默认情况，返回默认文案
+        return $this->_defaultText($request);
 
 
         //根据站号获取信息
