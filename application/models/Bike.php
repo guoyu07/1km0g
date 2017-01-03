@@ -13,25 +13,10 @@ class BikeModel {
      * @return array
      */
     static public function showBikeData() {
-        //Azure暂不支持缓存
+        /**
+         * @todo 增加短时间本地缓存
+         */
         return self::_showBikeOriData();
-        
-        $cache_time = 10;
-        $data = Comm\Kv::get('bikedata');
-        if(!is_array($data) || (NOW > $data['expire'] && Comm\Mc::getLock('bikedata', $cache_time)) ) {
-            //没有KV数据或者（持久化数据过期并单进程锁定）
-            $result = self::_showBikeOriData();
-            $data = array(
-                'expire' => NOW + $cache_time,
-                'result' => $result,
-            );
-            Comm\Kv::set('bikedata', array(), $data);
-            Comm\Mc::unLock('bikedata');
-        } else {
-            $result = $data['result'];
-        }
-
-        return $result;
     }
 
     /**
