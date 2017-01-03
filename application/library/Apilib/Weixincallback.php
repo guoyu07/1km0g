@@ -27,7 +27,7 @@ class Weixincallback {
      * @return \Dataobject\Weixin\Requestmsg\Base
      */
     public function getRequestMsg($post_str = null) {
-        !$post_str && $post_str = $GLOBALS['HTTP_RAW_POST_DATA'];
+        !$post_str && $post_str = file_get_contents('php://input');
         $class = '\\Dataobject\\Weixin\\Requestmsg\\Base';
         if($post_str) {
             $post_obj = simplexml_load_string($post_str, 'SimpleXMLElement', LIBXML_NOCDATA);
