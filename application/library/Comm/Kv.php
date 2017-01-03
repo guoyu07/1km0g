@@ -31,6 +31,7 @@ abstract class Kv {
      * @return mixed 
      */
     static public function get($name, array $param = array()) {
+        return false;
         $config = self::showConfig($name, $param);
         $result = self::kvobj()->get($config['key_full']);
         return self::_processResult($result, $config);
@@ -46,6 +47,7 @@ abstract class Kv {
      * @return mixed
      */
     static public function set($name, array $param = array(), $value) {
+        return false;
         $config = self::showConfig($name, $param);
         $value = self::_prepareData($value, $config);
         self::kvobj()->set($config['key_full'], $value);

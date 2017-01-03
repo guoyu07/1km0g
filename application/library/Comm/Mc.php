@@ -6,6 +6,15 @@
  * @author  chengxuan <chengxuan@staff.weibo.com>
  */
 namespace Comm;
+
+class Mc_Empty {
+    
+    public function __call($func, $method) {
+        return false;
+    }
+    
+}
+
 class Mc {
     
     /**
@@ -14,7 +23,7 @@ class Mc {
      * @return \Memcache
      */
     static public function init() {
-        return \memcache_init();
+        return new Mc_Empty();
     }
     
     /**
