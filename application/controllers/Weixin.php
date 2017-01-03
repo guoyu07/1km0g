@@ -34,9 +34,6 @@ class WeixinController extends Yaf_Controller_Abstract {
             echo $echostr;
         } else {
             $request = $weixin->getRequestMsg();
-            
-            var_dump($request);
-            
             if($request instanceof \Dataobject\Weixin\Requestmsg\Location) {
                 //处理地理位置
                 $response = $this->_location($request);
@@ -164,10 +161,6 @@ class WeixinController extends Yaf_Controller_Abstract {
      */
     protected function _text(\Dataobject\Weixin\Requestmsg\Text $request) {
         $content = trim($request->Content);
-        
-        //默认情况，返回默认文案
-        return $this->_defaultText($request);
-
 
         //根据站号获取信息
         if(is_numeric($content)) {
