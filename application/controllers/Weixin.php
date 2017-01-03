@@ -34,6 +34,9 @@ class WeixinController extends Yaf_Controller_Abstract {
             echo $echostr;
         } else {
             $request = $weixin->getRequestMsg();
+            
+            var_dump($request);
+            
             if($request instanceof \Dataobject\Weixin\Requestmsg\Location) {
                 //处理地理位置
                 $response = $this->_location($request);
